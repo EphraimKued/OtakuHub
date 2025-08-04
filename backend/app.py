@@ -30,7 +30,7 @@ def load_data():
 
 
 def save_data(data):
-    """Save the anime data to the JSON file."""
+    """this will save the anime data to the JSON file."""
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
@@ -38,7 +38,7 @@ def save_data(data):
 # Routes
 @app.route("/anime-list", methods=["GET"])
 def get_anime_list():
-    """Get the list of anime."""
+    """this gets from saved list of anime."""
     data = load_data()
     return jsonify(data["anime_list"])
 
@@ -48,6 +48,7 @@ def add_to_list():
     """Add a new anime to the list."""
     anime = request.json
     data = load_data()
+    """prevent adding duplicates."""
     if any(item["id"] == anime["id"] for item in data["anime_list"]):
         return jsonify({"message": "Anime already in list"}), 400
 
@@ -83,7 +84,7 @@ def remove_from_list():
 
 @app.route("/recommendations", methods=["POST"])
 def get_recommendations():
-    """Get recommendations based on anime IDs."""
+    """Get/fetches anime recommendations based on anime IDs."""
     ids = request.json.get("ids", [])
     recommendations = []
 
